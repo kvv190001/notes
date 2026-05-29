@@ -32,4 +32,24 @@ public class NoteController {
     public Note createNote(@RequestBody Note note) {
         return noteService.createNote(note);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Note> updateNote(@PathVariable Long id, @RequestBody Note noteDetails){
+        try {
+            Note updatedNote = noteService.updateNote(id, noteDetails);
+            return ResponseEntity.ok(updatedNote);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteNote(@PathVariable Long id) {
+        try {
+            noteService.deleteNote(id);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

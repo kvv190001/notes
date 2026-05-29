@@ -25,4 +25,20 @@ public class NoteService {
     public Note createNote(Note note) {
         return noteRepository.save(note);
     }
+
+    public Note updateNote(Long id, Note noteDetails) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Note not found with id: " + id));
+
+        note.setTitle(noteDetails.getTitle());
+        note.setContent(noteDetails.getContent());
+
+        return noteRepository.save(note);
+    }
+
+    public void deleteNote(Long id) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Note not found with id: " + id));
+        noteRepository.delete(note);
+    }
 }
